@@ -1,0 +1,50 @@
+export default {
+  app: {
+    title: 'Конструктор лонгридов',
+    description: 'Создавайте красивые лонгриды с различными блоками контента',
+  },
+  toolbar: {
+    save: 'Сохранить',
+    addBlock: 'Добавить блок',
+    blocks: {
+      header: 'Заголовок',
+      paragraph: 'Текст',
+      image: 'Изображение',
+      quote: 'Цитата',
+      list: 'Список',
+      table: 'Таблица',
+      code: 'Код',
+      warning: 'Предупреждение',
+    },
+  },
+  blockSettings: {
+    title: 'Настройки блока',
+    selectBlock: 'Выберите блок для настройки',
+    delete: 'Удалить',
+    update: 'Обновить',
+    fields: {
+      text: 'Текст',
+      level: 'Уровень',
+      url: 'URL',
+      caption: 'Подпись',
+      withBorder: 'С рамкой',
+      withBackground: 'С фоном',
+      stretched: 'Растянуть',
+    },
+  },
+  exportPanel: {
+    title: 'Экспорт',
+    generate: 'Сгенерировать',
+    copy: 'Копировать',
+    json: 'JSON',
+    html: 'HTML',
+    copySuccess: 'Скопировано в буфер обмена!',
+    copyError: 'Ошибка при копировании',
+  },
+  common: {
+    cancel: 'Отмена',
+    confirm: 'Подтвердить',
+    loading: 'Загрузка...',
+    error: 'Ошибка',
+  },
+};

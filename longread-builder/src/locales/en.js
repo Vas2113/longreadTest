@@ -1,0 +1,50 @@
+export default {
+  app: {
+    title: 'Longread Builder',
+    description: 'Create beautiful longreads with various content blocks',
+  },
+  toolbar: {
+    save: 'Save',
+    addBlock: 'Add block',
+    blocks: {
+      header: 'Header',
+      paragraph: 'Text',
+      image: 'Image',
+      quote: 'Quote',
+      list: 'List',
+      table: 'Table',
+      code: 'Code',
+      warning: 'Warning',
+    },
+  },
+  blockSettings: {
+    title: 'Block Settings',
+    selectBlock: 'Select block to configure',
+    delete: 'Delete',
+    update: 'Update',
+    fields: {
+      text: 'Text',
+      level: 'Level',
+      url: 'URL',
+      caption: 'Caption',
+      withBorder: 'With border',
+      withBackground: 'With background',
+      stretched: 'Stretched',
+    },
+  },
+  exportPanel: {
+    title: 'Export',
+    generate: 'Generate',
+    copy: 'Copy',
+    json: 'JSON',
+    html: 'HTML',
+    copySuccess: 'Copied to clipboard!',
+    copyError: 'Copy error',
+  },
+  common: {
+    cancel: 'Cancel',
+    confirm: 'Confirm',
+    loading: 'Loading...',
+    error: 'Error',
+  },
+};
