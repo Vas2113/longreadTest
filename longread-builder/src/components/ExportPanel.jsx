@@ -211,7 +211,7 @@ export default function ExportPanel({ data, onSave }) {
                 rows={8}
                 value={jsonOutput || locale.exportPanel.generate}
                 variant="outlined"
-                InputProps={{ readOnly: true }}
+                slotProps={{ readOnly: true }}
                 sx={{ mb: 2 }}
               />
               <Button
@@ -230,7 +230,7 @@ export default function ExportPanel({ data, onSave }) {
                 rows={8}
                 value={htmlOutput || locale.exportPanel.generate}
                 variant="outlined"
-                InputProps={{ readOnly: true }}
+                slotProps={{ readOnly: true }}
                 sx={{ mb: 2 }}
               />
               <Button
