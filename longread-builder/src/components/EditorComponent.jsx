@@ -38,7 +38,7 @@ function EditorComponent({ onInstanceReady, onBlockSelect, initialData }) {
               if (initialData?.blocks?.length > 0) {
                 setTimeout(() => {
                   if (isMounted.current && editorInstance.blocks) {
-                    editorInstance.blocks?.getBlockByIndex(0)?.focus();
+                    editorInstance.blocks.getBlockByIndex(0)?.focus();
                   }
                 }, 100);
               }
@@ -70,11 +70,16 @@ function EditorComponent({ onInstanceReady, onBlockSelect, initialData }) {
     }
 
     return () => {
+      isInitialized.current = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    return () => {
       if (editorInstanceRef.current) {
         try {
           const editorInstance = editorInstanceRef.current;
           editorInstanceRef.current = null;
-          isInitialized.current = false;
           setEditor(null);
 
           if (typeof editorInstance.destroy === 'function') {
@@ -88,7 +93,7 @@ function EditorComponent({ onInstanceReady, onBlockSelect, initialData }) {
         }
       }
     };
-  }, [initialData, onBlockSelect, onInstanceReady]);
+  }, []);
 
   useEffect(() => {
     const handleClick = async () => {
@@ -112,7 +117,7 @@ function EditorComponent({ onInstanceReady, onBlockSelect, initialData }) {
       editorElement.addEventListener('click', handleClick);
       return () => editorElement.removeEventListener('click', handleClick);
     }
-  }, [editor, onBlockSelect]);
+  }, [editor]);
 
   return (
     <div
