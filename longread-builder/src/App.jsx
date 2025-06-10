@@ -21,8 +21,15 @@ function App() {
   };
 
   return (
-    <Container maxWidth="lg">
-      <Box sx={{ my: 4 }}>
+    <Container
+      maxWidth="lg"
+      sx={{
+        height: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        py: 2,
+      }}>
+      <Box sx={{ mb: 2 }}>
         <Box
           display="flex"
           justifyContent="space-between"
@@ -39,39 +46,57 @@ function App() {
           editor={editorInstance}
           onSave={handleSave}
         />
+      </Box>
 
-        <Box sx={{ display: 'flex', gap: 3, mt: 3 }}>
-          <Box sx={{ flex: 2 }}>
-            <Paper
-              elevation={3}
-              sx={{ p: 2 }}>
-              <EditorComponent
-                onInstanceReady={setEditorInstance}
-                onBlockSelect={setSelectedBlock}
-                initialData={editorData}
-              />
-            </Paper>
-          </Box>
+      <Box
+        sx={{
+          display: 'flex',
+          gap: 3,
+          flex: 1,
+          overflow: 'hidden',
+        }}>
+        <Box sx={{ flex: 2, height: '100%' }}>
+          <Paper
+            elevation={3}
+            sx={{
+              p: 2,
+              height: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+            }}>
+            <EditorComponent
+              onInstanceReady={setEditorInstance}
+              onBlockSelect={setSelectedBlock}
+              initialData={editorData}
+            />
+          </Paper>
+        </Box>
 
-          <Box sx={{ flex: 1 }}>
-            <Paper
-              elevation={3}
-              sx={{ p: 2, mb: 2 }}>
-              <BlockSettings
-                block={selectedBlock}
-                editor={editorInstance}
-              />
-            </Paper>
+        <Box
+          sx={{
+            flex: 1,
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 2,
+          }}>
+          <Paper
+            elevation={3}
+            sx={{ p: 2, flex: 1 }}>
+            <BlockSettings
+              block={selectedBlock}
+              editor={editorInstance}
+            />
+          </Paper>
 
-            <Paper
-              elevation={3}
-              sx={{ p: 2 }}>
-              <ExportPanel
-                data={editorData}
-                onSave={handleSave}
-              />
-            </Paper>
-          </Box>
+          <Paper
+            elevation={3}
+            sx={{ p: 2, flex: 1 }}>
+            <ExportPanel
+              data={editorData}
+              onSave={handleSave}
+            />
+          </Paper>
         </Box>
       </Box>
     </Container>
