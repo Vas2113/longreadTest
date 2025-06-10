@@ -5,6 +5,7 @@ import Quote from '@editorjs/quote';
 import Embed from '@editorjs/embed';
 import Table from '@editorjs/table';
 import Warning from '@editorjs/warning';
+import Link from '@editorjs/link';
 import Code from '@editorjs/code';
 import Marker from '@editorjs/marker';
 import InlineCode from '@editorjs/inline-code';
@@ -170,6 +171,10 @@ export const editorTools = {
       titlePlaceholder: 'Заголовок',
       messagePlaceholder: 'Сообщение',
     },
+  },
+  link: {
+    class: Link,
+    inlineToolbar: true,
   },
   code: {
     class: Code,
