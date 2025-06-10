@@ -22,7 +22,7 @@ function EditorComponent({ onInstanceReady, onBlockSelect, initialData }) {
             onReady: () => {
               editorInstanceRef.current = editorInstance;
               setEditor(editorInstance);
-              onInstanceReady(editorInstance);
+              onInstanceReady?.(editorInstance);
               isInitialized.current = true;
 
               if (initialData?.blocks?.length > 0) {
@@ -38,9 +38,9 @@ function EditorComponent({ onInstanceReady, onBlockSelect, initialData }) {
                   editorInstance.blocks.getCurrentBlockIndex();
                 if (
                   currentBlockIndex >= 0 &&
-                  savedData.blocks[currentBlockIndex]
+                  savedData.blocks?.[currentBlockIndex]
                 ) {
-                  onBlockSelect(savedData.blocks[currentBlockIndex]);
+                  onBlockSelect?.(savedData.blocks[currentBlockIndex]);
                 }
               } catch (error) {
                 console.error('Error saving data:', error);
@@ -56,11 +56,19 @@ function EditorComponent({ onInstanceReady, onBlockSelect, initialData }) {
     }
 
     return () => {
-      if (editorInstanceRef.current?.destroy) {
-        editorInstanceRef.current
-          .destroy()
-          .then(() => console.log('Editor destroyed'))
-          .catch((e) => console.error('Error destroying editor:', e));
+      if (editorInstanceRef.current) {
+        try {
+          if (typeof editorInstanceRef.current.destroy === 'function') {
+            editorInstanceRef.current
+              .destroy()
+              .then(() => console.log('Editor destroyed'))
+              .catch((e) => console.error('Error destroying editor:', e));
+          } else {
+            editorInstanceRef.current = null;
+          }
+        } catch (error) {
+          console.error('Error during editor cleanup:', error);
+        }
       }
     };
   }, []);
@@ -72,7 +80,9 @@ function EditorComponent({ onInstanceReady, onBlockSelect, initialData }) {
           const currentBlockIndex = editor.blocks.getCurrentBlockIndex();
           if (currentBlockIndex >= 0) {
             const savedData = await editor.save();
-            onBlockSelect(savedData.blocks[currentBlockIndex]);
+            if (savedData.blocks?.[currentBlockIndex]) {
+              onBlockSelect?.(savedData.blocks[currentBlockIndex]);
+            }
           }
         } catch (error) {
           console.error('Error handling click:', error);
