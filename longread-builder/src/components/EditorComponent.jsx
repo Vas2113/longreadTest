@@ -8,6 +8,14 @@ function EditorComponent({ onInstanceReady, onBlockSelect, initialData }) {
   const editorInstanceRef = useRef(null);
   const [editor, setEditor] = useState(null);
   const isInitialized = useRef(false);
+  const isMounted = useRef(false);
+
+  useEffect(() => {
+    isMounted.current = true;
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
 
   useEffect(() => {
     if (!isInitialized.current) {
@@ -20,6 +28,8 @@ function EditorComponent({ onInstanceReady, onBlockSelect, initialData }) {
             minHeight: 100,
             placeholder: 'Начните вводить текст...',
             onReady: () => {
+              if (!isMounted.current) return;
+
               editorInstanceRef.current = editorInstance;
               setEditor(editorInstance);
               onInstanceReady?.(editorInstance);
@@ -27,15 +37,19 @@ function EditorComponent({ onInstanceReady, onBlockSelect, initialData }) {
 
               if (initialData?.blocks?.length > 0) {
                 setTimeout(() => {
-                  editorInstance.blocks.getBlockByIndex(0)?.focus();
+                  if (isMounted.current && editorInstance.blocks) {
+                    editorInstance.blocks?.getBlockByIndex(0)?.focus();
+                  }
                 }, 100);
               }
             },
             onChange: async (api) => {
+              if (!isMounted.current) return;
+
               try {
                 const savedData = await api.saver.save();
                 const currentBlockIndex =
-                  editorInstance.blocks.getCurrentBlockIndex();
+                  editorInstance.blocks?.getCurrentBlockIndex();
                 if (
                   currentBlockIndex >= 0 &&
                   savedData.blocks?.[currentBlockIndex]
@@ -58,24 +72,27 @@ function EditorComponent({ onInstanceReady, onBlockSelect, initialData }) {
     return () => {
       if (editorInstanceRef.current) {
         try {
-          if (typeof editorInstanceRef.current.destroy === 'function') {
-            editorInstanceRef.current
-              .destroy()
+          const editorInstance = editorInstanceRef.current;
+          editorInstanceRef.current = null;
+          isInitialized.current = false;
+          setEditor(null);
+
+          if (typeof editorInstance.destroy === 'function') {
+            Promise.resolve()
+              .then(() => editorInstance.destroy())
               .then(() => console.log('Editor destroyed'))
               .catch((e) => console.error('Error destroying editor:', e));
-          } else {
-            editorInstanceRef.current = null;
           }
         } catch (error) {
           console.error('Error during editor cleanup:', error);
         }
       }
     };
-  }, []);
+  }, [initialData, onBlockSelect, onInstanceReady]);
 
   useEffect(() => {
     const handleClick = async () => {
-      if (editor) {
+      if (editor?.blocks) {
         try {
           const currentBlockIndex = editor.blocks.getCurrentBlockIndex();
           if (currentBlockIndex >= 0) {
@@ -95,7 +112,7 @@ function EditorComponent({ onInstanceReady, onBlockSelect, initialData }) {
       editorElement.addEventListener('click', handleClick);
       return () => editorElement.removeEventListener('click', handleClick);
     }
-  }, [editor]);
+  }, [editor, onBlockSelect]);
 
   return (
     <div

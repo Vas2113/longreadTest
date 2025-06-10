@@ -49,10 +49,20 @@ export default function BlockSettings({ block, editor }) {
   const handleUpdateBlock = async () => {
     if (editor && block) {
       try {
-        await editor.blocks.update(block.id, {
+        // Получаем текущий индекс блока
+        const currentIndex = editor.blocks?.getCurrentBlockIndex();
+
+        // Обновляем блок
+        await editor.blocks?.update(block.id, {
           ...block,
           data: settings,
         });
+
+        // Возвращаем фокус на обновленный блок
+        const updatedBlock = editor.blocks?.getBlockByIndex(currentIndex);
+        if (updatedBlock) {
+          updatedBlock.focus();
+        }
       } catch (error) {
         console.error('Error updating block:', error);
       }
@@ -62,22 +72,15 @@ export default function BlockSettings({ block, editor }) {
   const handleDeleteBlock = async () => {
     if (editor && block) {
       try {
-        // Проверяем существование блока перед удалением
-        const blockExists = editor.blocks.getBlockById(block.id);
-        if (!blockExists) {
-          console.warn('Block not found');
-          return;
-        }
-
-        // Сохраняем текущий индекс перед удалением
-        const currentIndex = editor.blocks.getCurrentBlockIndex();
+        // Получаем текущий индекс блока
+        const currentIndex = editor.blocks?.getCurrentBlockIndex();
 
         // Удаляем блок
-        await editor.blocks.delete(block.id);
+        await editor.blocks?.delete(block.id);
 
-        // После удаления пытаемся выбрать предыдущий блок
+        // Пытаемся выбрать предыдущий блок
         const newIndex = Math.max(0, currentIndex - 1);
-        const prevBlock = editor.blocks.getBlockByIndex(newIndex);
+        const prevBlock = editor.blocks?.getBlockByIndex(newIndex);
         if (prevBlock) {
           prevBlock.focus();
         }
@@ -134,7 +137,7 @@ export default function BlockSettings({ block, editor }) {
                 <MenuItem
                   key={level}
                   value={level}>
-                  {locale.toolbar.blocks.header} {level}
+                  {locale.toolbar.blocks?.header} {level}
                 </MenuItem>
               ))}
             </Select>
@@ -272,7 +275,7 @@ export default function BlockSettings({ block, editor }) {
             name="rows"
             value={settings.rows || 2}
             onChange={handleChange}
-            slotProps={{ min: 1, max: 10 }}
+            inputProps={{ min: 1, max: 10 }}
           />
           <TextField
             label="Количество столбцов"
@@ -280,7 +283,7 @@ export default function BlockSettings({ block, editor }) {
             name="cols"
             value={settings.cols || 2}
             onChange={handleChange}
-            slotProps={{ min: 1, max: 6 }}
+            inputProps={{ min: 1, max: 6 }}
           />
           <Chip
             label="С заголовками"
