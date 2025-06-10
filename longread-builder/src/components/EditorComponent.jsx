@@ -1,49 +1,104 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import EditorJS from '@editorjs/editorjs';
 import { editorTools } from '../utils/editorTools';
-import { editorLocalization } from '../utils/editorLocalization';
 
 function EditorComponent({ onInstanceReady, onBlockSelect, initialData }) {
   const editorRef = useRef(null);
-  const editorInstance = useRef(null);
+  const [editor, setEditor] = useState(null);
+  const isInitialized = useRef(false);
 
+  // Инициализация редактора
   useEffect(() => {
-    if (!editorInstance.current) {
+    if (!isInitialized.current) {
+      const initEditor = async () => {
+        try {
+          const editorInstance = new EditorJS({
+            holder: 'editorjs',
+            tools: editorTools,
+            data: initialData || {},
+            minHeight: 100,
+            placeholder: 'Начните вводить текст...',
+            onReady: () => {
+              setEditor(editorInstance);
+              onInstanceReady(editorInstance);
+              isInitialized.current = true;
+
+              // Выбираем первый блок при загрузке
+              if (initialData?.blocks?.length > 0) {
+                setTimeout(() => {
+                  editorInstance.blocks.getBlockByIndex(0)?.focus();
+                }, 100);
+              }
+            },
+            onChange: async (api) => {
+              try {
+                const savedData = await api.saver.save();
+                const currentBlockIndex =
+                  editorInstance.blocks.getCurrentBlockIndex();
+                if (
+                  currentBlockIndex >= 0 &&
+                  savedData.blocks[currentBlockIndex]
+                ) {
+                  onBlockSelect(savedData.blocks[currentBlockIndex]);
+                }
+              } catch (error) {
+                console.error('Error saving data:', error);
+              }
+            },
+          });
+        } catch (error) {
+          console.error('Editor initialization error:', error);
+        }
+      };
+
       initEditor();
     }
 
+    // Очистка при размонтировании
     return () => {
-      if (editorInstance.current) {
-        editorInstance.current.destroy();
+      if (editor?.destroy) {
+        editor
+          .destroy()
+          .then(() => console.log('Editor destroyed'))
+          .catch((e) => console.error('Error destroying editor:', e));
       }
     };
   }, []);
 
-  const initEditor = () => {
-    const editor = new EditorJS({
-      holder: 'editorjs',
-      tools: editorTools,
-      data: initialData || {},
-      i18n: editorLocalization,
-      onReady: () => {
-        editorInstance.current = editor;
-        onInstanceReady(editor);
-      },
-      onChange: () => {
-        editor.save().then((data) => {
+  // Обработчик кликов по редактору
+  useEffect(() => {
+    const handleClick = async () => {
+      if (editor) {
+        try {
           const currentBlockIndex = editor.blocks.getCurrentBlockIndex();
           if (currentBlockIndex >= 0) {
-            onBlockSelect(data.blocks[currentBlockIndex]);
+            const savedData = await editor.save();
+            onBlockSelect(savedData.blocks[currentBlockIndex]);
           }
-        });
-      },
-    });
-  };
+        } catch (error) {
+          console.error('Error handling click:', error);
+        }
+      }
+    };
+
+    const editorElement = editorRef.current;
+    if (editorElement) {
+      editorElement.addEventListener('click', handleClick);
+      return () => editorElement.removeEventListener('click', handleClick);
+    }
+  }, [editor]);
 
   return (
     <div
       id="editorjs"
       ref={editorRef}
+      style={{
+        minHeight: '300px',
+        backgroundColor: '#fff',
+        border: '1px solid #e0e0e0',
+        borderRadius: '4px',
+        padding: '10px',
+      }}
     />
   );
 }
