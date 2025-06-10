@@ -61,7 +61,7 @@ export default function BlockSettings({ block, editor }) {
         // Возвращаем фокус на обновленный блок
         const updatedBlock = editor.blocks?.getBlockByIndex(currentIndex);
         if (updatedBlock) {
-          updatedBlock.focus();
+          updatedBlock?.focus();
         }
       } catch (error) {
         console.error('Error updating block:', error);
@@ -82,7 +82,7 @@ export default function BlockSettings({ block, editor }) {
         const newIndex = Math.max(0, currentIndex - 1);
         const prevBlock = editor.blocks?.getBlockByIndex(newIndex);
         if (prevBlock) {
-          prevBlock.focus();
+          prevBlock?.focus();
         }
       } catch (error) {
         console.error('Error deleting block:', error);
