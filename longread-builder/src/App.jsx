@@ -35,7 +35,7 @@ function App() {
           justifyContent="space-between"
           alignItems="center">
           <Typography
-            variant="h3"
+            variant="h5"
             component="h1">
             {locale.app.title}
           </Typography>

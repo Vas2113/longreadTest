@@ -275,7 +275,7 @@ export default function BlockSettings({ block, editor }) {
             name="rows"
             value={settings.rows || 2}
             onChange={handleChange}
-            inputProps={{ min: 1, max: 10 }}
+            slotProps={{ min: 1, max: 10 }}
           />
           <TextField
             label="Количество столбцов"
@@ -283,7 +283,7 @@ export default function BlockSettings({ block, editor }) {
             name="cols"
             value={settings.cols || 2}
             onChange={handleChange}
-            inputProps={{ min: 1, max: 6 }}
+            slotProps={{ min: 1, max: 6 }}
           />
           <Chip
             label="С заголовками"

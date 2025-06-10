@@ -13,6 +13,7 @@ export default {
       quote: 'Quote',
       list: 'List',
       table: 'Table',
+      link: 'Link',
       code: 'Code',
       warning: 'Warning',
     },

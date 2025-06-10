@@ -13,6 +13,7 @@ export default {
       quote: 'Цитата',
       list: 'Список',
       table: 'Таблица',
+      link: 'Ссылка',
       code: 'Код',
       warning: 'Предупреждение',
     },
