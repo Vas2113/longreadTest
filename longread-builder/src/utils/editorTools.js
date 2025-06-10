@@ -139,7 +139,8 @@ export const editorTools = {
     inlineToolbar: true,
   },
   image: {
-    class: CustomImageTool, // Используем наш кастомный инструмент
+    class: CustomImageTool,
+    // class: Image,
   },
   quote: {
     class: Quote,

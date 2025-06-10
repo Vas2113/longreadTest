@@ -1,13 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import EditorJS from '@editorjs/editorjs';
 import { editorTools } from '../utils/editorTools';
+import styles from './editorComponent.module.css';
 
 function EditorComponent({ onInstanceReady, onBlockSelect, initialData }) {
   const editorRef = useRef(null);
+  const editorInstanceRef = useRef(null);
   const [editor, setEditor] = useState(null);
   const isInitialized = useRef(false);
 
-  // Инициализация редактора
   useEffect(() => {
     if (!isInitialized.current) {
       const initEditor = async () => {
@@ -19,11 +20,11 @@ function EditorComponent({ onInstanceReady, onBlockSelect, initialData }) {
             minHeight: 100,
             placeholder: 'Начните вводить текст...',
             onReady: () => {
+              editorInstanceRef.current = editorInstance;
               setEditor(editorInstance);
               onInstanceReady(editorInstance);
               isInitialized.current = true;
 
-              // Выбираем первый блок при загрузке
               if (initialData?.blocks?.length > 0) {
                 setTimeout(() => {
                   editorInstance.blocks.getBlockByIndex(0)?.focus();
@@ -54,10 +55,9 @@ function EditorComponent({ onInstanceReady, onBlockSelect, initialData }) {
       initEditor();
     }
 
-    // Очистка при размонтировании
     return () => {
-      if (editor?.destroy) {
-        editor
+      if (editorInstanceRef.current?.destroy) {
+        editorInstanceRef.current
           .destroy()
           .then(() => console.log('Editor destroyed'))
           .catch((e) => console.error('Error destroying editor:', e));
@@ -65,7 +65,6 @@ function EditorComponent({ onInstanceReady, onBlockSelect, initialData }) {
     };
   }, []);
 
-  // Обработчик кликов по редактору
   useEffect(() => {
     const handleClick = async () => {
       if (editor) {
@@ -92,13 +91,7 @@ function EditorComponent({ onInstanceReady, onBlockSelect, initialData }) {
     <div
       id="editorjs"
       ref={editorRef}
-      style={{
-        minHeight: '300px',
-        backgroundColor: '#fff',
-        border: '1px solid #e0e0e0',
-        borderRadius: '4px',
-        padding: '10px',
-      }}
+      className={styles.container}
     />
   );
 }
