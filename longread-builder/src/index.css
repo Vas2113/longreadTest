@@ -14,26 +14,48 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
-a:hover {
-  color: #535bf2;
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
 }
 
 body {
   margin: 0;
   display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  min-height: 100dvh;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+  transition: color 0.2s;
+}
+a:hover {
+  color: #535bf2;
 }
 
 h1 {
-  font-size: 3.2em;
+  font-size: clamp(2rem, 5vw, 3.2em);
   line-height: 1.1;
+  margin-bottom: 0.5em;
 }
 
 button {
@@ -45,12 +67,11 @@ button {
   font-family: inherit;
   background-color: #1a1a1a;
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: all 0.25s;
 }
 button:hover {
   border-color: #646cff;
 }
-button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
@@ -65,5 +86,30 @@ button:focus-visible {
   }
   button {
     background-color: #f9f9f9;
+    color: #213547;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+  button {
+    padding: 0.5em 1em;
+  }
+}
+
+@media (hover: none) {
+  button:hover {
+    border-color: transparent;
+  }
+  a:hover {
+    color: inherit;
+  }
+}
+
+@media screen and (max-device-width: 480px) {
+  html {
+    -webkit-text-size-adjust: 100%;
   }
 }
