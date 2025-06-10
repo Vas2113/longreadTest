@@ -38,7 +38,7 @@ function EditorComponent({ onInstanceReady, onBlockSelect, initialData }) {
               if (initialData?.blocks?.length > 0) {
                 setTimeout(() => {
                   if (isMounted.current && editorInstance.blocks) {
-                    editorInstance.blocks.getBlockByIndex(0)?.focus();
+                    editorInstance.blocks?.getBlockByIndex(0)?.focus();
                   }
                 }, 100);
               }
@@ -99,7 +99,7 @@ function EditorComponent({ onInstanceReady, onBlockSelect, initialData }) {
     const handleClick = async () => {
       if (editor?.blocks) {
         try {
-          const currentBlockIndex = editor.blocks.getCurrentBlockIndex();
+          const currentBlockIndex = editor.blocks?.getCurrentBlockIndex();
           if (currentBlockIndex >= 0) {
             const savedData = await editor.save();
             if (savedData.blocks?.[currentBlockIndex]) {
