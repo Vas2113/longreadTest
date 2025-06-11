@@ -70,7 +70,7 @@ export default function ExportPanel({ data, onSave }) {
           html += `  <h${block.data.level}>${block.data.text}</h${block.data.level}>\n`;
           break;
 
-        case 'text':
+        case 'paragraph':
           html += `  <p>${block.data.text}</p>\n`;
           break;
 

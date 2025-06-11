@@ -8,7 +8,7 @@ export default {
     addBlock: 'Добавить блок',
     blocks: {
       header: 'Заголовок',
-      text: 'Текст',
+      paragraph: 'Текст',
       image: 'Изображение',
       quote: 'Цитата',
       list: 'Список',

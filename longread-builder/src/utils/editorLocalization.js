@@ -14,7 +14,7 @@ export const editorLocalization = {
     toolbar: {
       toolbox: {
         Add: 'Добавить',
-        Text: 'Текст',
+        Paragraph: 'Текст',
         Heading: 'Заголовок',
         List: 'Список',
         Quote: 'Цитата',

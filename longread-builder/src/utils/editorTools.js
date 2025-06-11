@@ -136,7 +136,7 @@ export const editorTools = {
       defaultLevel: 2,
     },
   },
-  text: {
+  paragraph: {
     class: Paragraph,
     inlineToolbar: true,
   },
