@@ -9,7 +9,7 @@ import Link from '@editorjs/link';
 import Code from '@editorjs/code';
 // import Marker from '@editorjs/marker';
 // import InlineCode from '@editorjs/inline-code';
-import Paragrapg from '@editorjs/paragraph';
+import Paragraph from '@editorjs/paragraph';
 
 class CustomImageTool {
   static get toolbox() {
@@ -137,7 +137,7 @@ export const editorTools = {
     },
   },
   text: {
-    class: Paragrapg,
+    class: Paragraph,
     inlineToolbar: true,
   },
   list: {
