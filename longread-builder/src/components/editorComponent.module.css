@@ -8,3 +8,7 @@
   overflow-y: auto;
   flex: 1;
 }
+
+:global(.ce-block__content) {
+  background-color: rgba(199, 255, 250, 0.295);
+}
