@@ -2,13 +2,14 @@ import Header from '@editorjs/header';
 import List from '@editorjs/list';
 import Image from '@editorjs/image';
 import Quote from '@editorjs/quote';
-import Embed from '@editorjs/embed';
+// import Embed from '@editorjs/embed';
 import Table from '@editorjs/table';
 import Warning from '@editorjs/warning';
 import Link from '@editorjs/link';
 import Code from '@editorjs/code';
-import Marker from '@editorjs/marker';
-import InlineCode from '@editorjs/inline-code';
+// import Marker from '@editorjs/marker';
+// import InlineCode from '@editorjs/inline-code';
+import Paragrapg from '@editorjs/paragraph';
 
 class CustomImageTool {
   static get toolbox() {
@@ -135,6 +136,10 @@ export const editorTools = {
       defaultLevel: 2,
     },
   },
+  text: {
+    class: Paragrapg,
+    inlineToolbar: true,
+  },
   list: {
     class: List,
     inlineToolbar: true,
@@ -151,15 +156,15 @@ export const editorTools = {
       captionPlaceholder: 'Цитата автора',
     },
   },
-  embed: {
-    class: Embed,
-    config: {
-      services: {
-        youtube: true,
-        coub: true,
-      },
-    },
-  },
+  // embed: {
+  //   class: Embed,
+  //   config: {
+  //     services: {
+  //       youtube: true,
+  //       coub: true,
+  //     },
+  //   },
+  // },
   table: {
     class: Table,
     inlineToolbar: true,
@@ -179,10 +184,10 @@ export const editorTools = {
   code: {
     class: Code,
   },
-  marker: {
-    class: Marker,
-  },
-  inlineCode: {
-    class: InlineCode,
-  },
+  // marker: {
+  //   class: Marker,
+  // },
+  // inlineCode: {
+  //   class: InlineCode,
+  // },
 };

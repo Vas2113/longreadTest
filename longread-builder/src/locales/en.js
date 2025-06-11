@@ -1,14 +1,14 @@
 export default {
   app: {
     title: 'Longread Builder',
-    description: 'Create beautiful longreads with various content blocks',
+    description: 'Description',
   },
   toolbar: {
     save: 'Save',
     addBlock: 'Add block',
     blocks: {
       header: 'Header',
-      paragraph: 'Text',
+      text: 'Text',
       image: 'Image',
       quote: 'Quote',
       list: 'List',

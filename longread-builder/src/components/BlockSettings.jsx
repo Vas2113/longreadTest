@@ -199,8 +199,8 @@ export default function BlockSettings({ block, editor }) {
         </>
       )}
 
-      {/* Настройки для параграфа */}
-      {blockType === 'paragraph' && (
+      {/* Настройки для текста */}
+      {blockType === 'text' && (
         <TextField
           fullWidth
           multiline

@@ -1,14 +1,14 @@
 export default {
   app: {
     title: 'Конструктор лонгридов',
-    description: 'Создавайте красивые лонгриды с различными блоками контента',
+    description: 'Описание',
   },
   toolbar: {
     save: 'Сохранить',
     addBlock: 'Добавить блок',
     blocks: {
       header: 'Заголовок',
-      paragraph: 'Текст',
+      text: 'Текст',
       image: 'Изображение',
       quote: 'Цитата',
       list: 'Список',

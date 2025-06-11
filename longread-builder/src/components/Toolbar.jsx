@@ -10,6 +10,7 @@ import {
   Link,
   Warning,
   Title,
+  TextFields,
 } from '@mui/icons-material';
 import { LocaleContext } from '../contexts/LocaleContext';
 
@@ -35,6 +36,7 @@ export default function Toolbar({ editor, onSave }) {
   const blockIcons = {
     header: <Title />,
     image: <AddPhotoAlternate />,
+    text: <TextFields />,
     quote: <FormatQuote />,
     list: <List />,
     code: <Code />,
