@@ -23,6 +23,7 @@ function EditorComponent({ onInstanceReady, onBlockSelect, initialData }) {
         try {
           const editorInstance = new EditorJS({
             holder: 'editorjs',
+            autofocus: true,
             tools: editorTools,
             data: initialData || {},
             minHeight: 100,
