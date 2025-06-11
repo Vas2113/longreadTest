@@ -19,13 +19,18 @@ function EditorComponent({ onInstanceReady, onBlockSelect, initialData }) {
 
   useEffect(() => {
     if (!isInitialized.current) {
+      const validatedData =
+        initialData?.blocks?.length > 0
+          ? initialData
+          : { blocks: [{ type: 'paragraph', data: { text: '' } }] };
+
       const initEditor = async () => {
         try {
           const editorInstance = new EditorJS({
             holder: 'editorjs',
             autofocus: true,
             tools: editorTools,
-            data: initialData || {},
+            data: validatedData,
             minHeight: 100,
             placeholder: 'Начните вводить текст...',
             onReady: () => {
