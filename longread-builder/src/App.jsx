@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { Container, Box, Typography, Paper } from '@mui/material';
+import { Container, Box, Typography } from '@mui/material';
 import EditorComponent from './components/EditorComponent';
 import Toolbar from './components/Toolbar';
 import BlockSettings from './components/BlockSettings';
@@ -56,20 +56,11 @@ function App() {
           overflow: 'hidden',
         }}>
         <Box sx={{ flex: 2, height: '100%' }}>
-          <Paper
-            elevation={3}
-            sx={{
-              p: 2,
-              height: '100%',
-              display: 'flex',
-              flexDirection: 'column',
-            }}>
-            <EditorComponent
-              onInstanceReady={setEditorInstance}
-              onBlockSelect={setSelectedBlock}
-              initialData={editorData}
-            />
-          </Paper>
+          <EditorComponent
+            onInstanceReady={setEditorInstance}
+            onBlockSelect={setSelectedBlock}
+            initialData={editorData}
+          />
         </Box>
 
         <Box
@@ -80,23 +71,15 @@ function App() {
             flexDirection: 'column',
             gap: 2,
           }}>
-          <Paper
-            elevation={3}
-            sx={{ p: 2, flex: 1 }}>
-            <BlockSettings
-              block={selectedBlock}
-              editor={editorInstance}
-            />
-          </Paper>
+          <BlockSettings
+            block={selectedBlock}
+            editor={editorInstance}
+          />
 
-          <Paper
-            elevation={3}
-            sx={{ p: 2, flex: 1 }}>
-            <ExportPanel
-              data={editorData}
-              onSave={handleSave}
-            />
-          </Paper>
+          <ExportPanel
+            data={editorData}
+            onSave={handleSave}
+          />
         </Box>
       </Box>
     </Container>
