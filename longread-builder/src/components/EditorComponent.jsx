@@ -78,7 +78,8 @@ function EditorComponent({ onInstanceReady, onBlockSelect, initialData }) {
     return () => {
       isInitialized.current = false;
     };
-  }, [initialData, onBlockSelect, onInstanceReady]);
+    //Здесь что-то создаёт доп блоки
+  }, [onBlockSelect, onInstanceReady]);
 
   useEffect(() => {
     return () => {
