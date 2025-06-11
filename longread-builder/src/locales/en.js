@@ -8,7 +8,7 @@ export default {
     addBlock: 'Add block',
     blocks: {
       header: 'Header',
-      Paragraph: 'Text',
+      paragraph: 'Text',
       image: 'Image',
       quote: 'Quote',
       list: 'List',

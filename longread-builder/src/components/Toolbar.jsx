@@ -36,7 +36,7 @@ export default function Toolbar({ editor, onSave }) {
   const blockIcons = {
     header: <Title />,
     image: <AddPhotoAlternate />,
-    text: <TextFields />,
+    paragraph: <TextFields />,
     quote: <FormatQuote />,
     list: <List />,
     code: <Code />,
