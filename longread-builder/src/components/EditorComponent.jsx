@@ -63,12 +63,12 @@ function EditorComponent({ onInstanceReady, onBlockSelect, initialData }) {
                   onBlockSelect?.(savedData.blocks[currentBlockIndex]);
                 }
               } catch (error) {
-                console.error('Error saving data:', error);
+                console.error('Ошибка сохранения данных:', error);
               }
             },
           });
         } catch (error) {
-          console.error('Editor initialization error:', error);
+          console.error('Ошибка инициализации редактора:', error);
         }
       };
 
@@ -78,7 +78,7 @@ function EditorComponent({ onInstanceReady, onBlockSelect, initialData }) {
     return () => {
       isInitialized.current = false;
     };
-  }, []);
+  }, [initialData, onBlockSelect, onInstanceReady]);
 
   useEffect(() => {
     return () => {
@@ -113,7 +113,7 @@ function EditorComponent({ onInstanceReady, onBlockSelect, initialData }) {
             }
           }
         } catch (error) {
-          console.error('Error handling click:', error);
+          console.error('Ошибка клика по элементу:', error);
         }
       }
     };
@@ -123,7 +123,7 @@ function EditorComponent({ onInstanceReady, onBlockSelect, initialData }) {
       editorElement.addEventListener('click', handleClick);
       return () => editorElement.removeEventListener('click', handleClick);
     }
-  }, [editor]);
+  }, [editor, onBlockSelect]);
 
   return (
     <div

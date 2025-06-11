@@ -64,7 +64,7 @@ export default function BlockSettings({ block, editor }) {
           updatedBlock?.focus();
         }
       } catch (error) {
-        console.error('Error updating block:', error);
+        console.error('Ошибка обноления блока:', error);
       }
     }
   };
@@ -85,7 +85,7 @@ export default function BlockSettings({ block, editor }) {
           prevBlock?.focus();
         }
       } catch (error) {
-        console.error('Error deleting block:', error);
+        console.error('Ошибка удаления блока:', error);
       }
     }
   };
