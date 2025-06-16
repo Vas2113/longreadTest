@@ -6,7 +6,8 @@ import Table from '@editorjs/table';
 import Warning from '@editorjs/warning';
 import Link from '@editorjs/link';
 import Code from '@editorjs/code';
-import Paragraph from '@editorjs/paragraph';
+// import Paragraph from '@editorjs/paragraph';
+import Delimiter from '@editorjs/delimiter';
 
 export const editorTools = {
   header: {
@@ -17,10 +18,10 @@ export const editorTools = {
       defaultLevel: 2,
     },
   },
-  paragraph: {
-    class: Paragraph,
-    inlineToolbar: true,
-  },
+  // paragraph: {
+  //   class: Paragraph,
+  //   inlineToolbar: true,
+  // },
   list: {
     class: List,
     inlineToolbar: true,
@@ -91,5 +92,9 @@ export const editorTools = {
   },
   code: {
     class: Code,
+  },
+  delimiter: {
+    class: Delimiter,
+    inlineToolbar: true,
   },
 };
