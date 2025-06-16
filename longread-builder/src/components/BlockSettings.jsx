@@ -22,6 +22,7 @@ export default function BlockSettings({ block, editor }) {
   const [blockType, setBlockType] = useState('');
 
   useEffect(() => {
+    console.log(block, 'selectedBlock');
     if (block) {
       setBlockType(block.type);
       setSettings(block.data || {});
@@ -45,26 +46,19 @@ export default function BlockSettings({ block, editor }) {
       [name]: items,
     }));
   };
-
   const handleUpdateBlock = async () => {
     if (editor && block) {
       try {
-        // Получаем текущий индекс блока
-        const currentIndex = editor.blocks?.getCurrentBlockIndex();
+        const currentIndex = editor.blocks.getCurrentBlockIndex();
 
-        // Обновляем блок
-        await editor.blocks?.update(block.id, {
+        await editor.blocks.update(block.id, {
           ...block,
           data: settings,
         });
 
-        // Возвращаем фокус на обновленный блок
-        const updatedBlock = editor.blocks?.getBlockByIndex(currentIndex);
-        if (updatedBlock) {
-          updatedBlock?.focus();
-        }
+        editor.caret.focus(currentIndex);
       } catch (error) {
-        console.error('Ошибка обноления блока:', error);
+        console.error('Update block error:', error);
       }
     }
   };
@@ -72,20 +66,13 @@ export default function BlockSettings({ block, editor }) {
   const handleDeleteBlock = async () => {
     if (editor && block) {
       try {
-        // Получаем текущий индекс блока
-        const currentIndex = editor.blocks?.getCurrentBlockIndex();
+        const currentIndex = editor.blocks.getBlockIndex(block.id);
+        await editor.blocks.delete(block.id);
 
-        // Удаляем блок
-        await editor.blocks?.delete(block.id);
-
-        // Пытаемся выбрать предыдущий блок
-        const newIndex = Math.max(0, currentIndex - 1);
-        const prevBlock = editor.blocks?.getBlockByIndex(newIndex);
-        if (prevBlock) {
-          prevBlock?.focus();
-        }
+        const prevIndex = Math.max(0, currentIndex - 1);
+        editor.caret.focus(prevIndex);
       } catch (error) {
-        console.error('Ошибка удаления блока:', error);
+        console.error('Delete block error:', error);
       }
     }
   };
