@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import EditorJS from '@editorjs/editorjs';
 import { editorTools } from '../utils/editorTools';
 import styles from './editorComponent.module.css';
@@ -6,7 +6,6 @@ import styles from './editorComponent.module.css';
 function EditorComponent({ onInstanceReady, onBlockSelect, initialData }) {
   const editorRef = useRef(null);
   const editorInstanceRef = useRef(null);
-  const [editor, setEditor] = useState(null);
   const isInitialized = useRef(false);
   const isMounted = useRef(false);
 
@@ -37,7 +36,6 @@ function EditorComponent({ onInstanceReady, onBlockSelect, initialData }) {
               if (!isMounted.current) return;
 
               editorInstanceRef.current = editorInstance;
-              setEditor(editorInstance);
               onInstanceReady?.(editorInstance);
               isInitialized.current = true;
 
@@ -78,8 +76,7 @@ function EditorComponent({ onInstanceReady, onBlockSelect, initialData }) {
     return () => {
       isInitialized.current = false;
     };
-    //Здесь что-то создаёт доп блоки
-  }, [onBlockSelect, onInstanceReady]);
+  }, [initialData, onInstanceReady]);
 
   useEffect(() => {
     return () => {
@@ -87,7 +84,6 @@ function EditorComponent({ onInstanceReady, onBlockSelect, initialData }) {
         try {
           const editorInstance = editorInstanceRef.current;
           editorInstanceRef.current = null;
-          setEditor(null);
 
           if (typeof editorInstance.destroy === 'function') {
             Promise.resolve()
@@ -101,30 +97,6 @@ function EditorComponent({ onInstanceReady, onBlockSelect, initialData }) {
       }
     };
   }, []);
-
-  useEffect(() => {
-    const handleClick = async () => {
-      if (editor?.blocks) {
-        try {
-          const currentBlockIndex = editor.blocks?.getCurrentBlockIndex();
-          if (currentBlockIndex >= 0) {
-            const savedData = await editor.save();
-            if (savedData.blocks?.[currentBlockIndex]) {
-              onBlockSelect?.(savedData.blocks[currentBlockIndex]);
-            }
-          }
-        } catch (error) {
-          console.error('Ошибка клика по элементу:', error);
-        }
-      }
-    };
-
-    const editorElement = editorRef.current;
-    if (editorElement) {
-      editorElement.addEventListener('click', handleClick);
-      return () => editorElement.removeEventListener('click', handleClick);
-    }
-  }, [editor, onBlockSelect]);
 
   return (
     <div
